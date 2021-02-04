@@ -35,12 +35,12 @@
           </v-list-item-content>
         </v-list-item>
 
-        <v-list-item link to="/about">
+        <v-list-item link to="/users">
           <v-list-item-icon>
-            <v-icon>mdi-heart</v-icon>
+            <v-icon>mdi-account-outline</v-icon>
           </v-list-item-icon>
           <v-list-item-content>
-            О нас
+            Найти друзей
           </v-list-item-content>
         </v-list-item>
       </v-list>
