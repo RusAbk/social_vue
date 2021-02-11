@@ -11,7 +11,7 @@
     <v-row class="text-left">
       <v-col cols="2">
         <img
-          v-bind:src="`https://randomuser.me/api/portraits/men/${$route.params.id}.jpg`"
+          v-bind:src="`https://randomuser.me/api/portraits/men/${userId}.jpg`"
           style="max-width: 100%"
         />
       </v-col>
@@ -52,7 +52,7 @@
                     <v-img
                       class="elevation-6"
                       alt=""
-                      :src="`https://randomuser.me/api/portraits/men/${$route.params.id}.jpg`"
+                      :src="`https://randomuser.me/api/portraits/men/${userId}.jpg`"
                     ></v-img>
                   </v-list-item-avatar>
         
@@ -82,6 +82,7 @@ export default {
   data() {
     return {
       userData: "",
+      userId: '',
       posts: []
     };
   },
@@ -89,30 +90,39 @@ export default {
     getUserData() {
       this.axios
         .get(
-          `http://jsonplaceholder.typicode.com/users/${this.$route.params.id}`
+          `http://jsonplaceholder.typicode.com/users/${this.userId}`
         )
         .then((response) => {
           this.userData = response.data;
+          this.$store.commit('setName', this.userData.name);
         });
     },
     getUserPosts() {
       this.axios
         .get(
-          `http://jsonplaceholder.typicode.com/posts?userId=${this.$route.params.id}`
+          `http://jsonplaceholder.typicode.com/posts?userId=${this.userId}`
         )
         .then((response) => {
           this.posts = response.data;
         });
     },
+    initPage(){
+      if(this.$router.currentRoute.path == '/')
+        this.userId = this.$store.state.userData.id;
+      else
+        this.userId = this.$route.params.id;
+
+
+      this.getUserData();
+      this.getUserPosts();
+    }
   },
   mounted() {
-    this.getUserData();
-    this.getUserPosts();
+    this.initPage();
   },
   watch: {
     $route() {
-      this.getUserData();
-      this.getUserPosts();
+      this.initPage();
     },
   },
 };

@@ -12,14 +12,14 @@
       <v-list nav shaped dense> 
         <v-list-item two-line>
           <v-list-item-avatar>
-            <img src="https://randomuser.me/api/portraits/men/2.jpg">
+            <img v-bind:src=" `https://randomuser.me/api/portraits/men/${ $store.state.userData.id }.jpg` ">
           </v-list-item-avatar>
           <v-list-item-content>
             <v-list-item-title>
-              SocialLink
+              {{title}}
             </v-list-item-title>
             <v-list-item-subtitle>
-              Руслан Абкадиров
+              {{$store.state.userData.name}}
             </v-list-item-subtitle>
           </v-list-item-content>
         </v-list-item>
@@ -65,6 +65,7 @@ export default {
 
   data: () => ({
     nav: true,
+    title: 'SocialVue'
   }),
 };
 </script>
